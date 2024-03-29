@@ -1,0 +1,9 @@
+prophet
+gunicorn
+flask
+matplotlib
+datetime
+yfinance
+
+
+
