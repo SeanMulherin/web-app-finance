@@ -104,7 +104,6 @@ def forecast():
     ticker = ticker.strip()
     ticker = ticker.upper()
     period = request.form['period']
-    period = float(period)
 
     if period < 0:
         result = f"ERROR: FORECAST LENGTH MUST BE POSITIVE. YOU INPUT {period} AS YOUR FORECAST LENGTH. PLEASE GO BACK A PAGE AND TRY AGAIN."
