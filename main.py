@@ -16,7 +16,12 @@ import yfinance as yf
 app = Flask(__name__, static_url_path='/static')
 
 
-def price_fcst(name, period):
+def price_fcst(name, period, period_unit):
+    if period_unit == "day":
+        period = period/365
+    elif period_unit == "month":
+        period = period/12
+
     df = yf.download(tickers = {name},
                  start=datetime.today()-timedelta(days=365*5),
                  end=datetime.today())
@@ -43,13 +48,14 @@ def price_fcst(name, period):
     df = df.reset_index()
     model = Prophet()
     model_fit = model.fit(df)
-    future = model_fit.make_future_dataframe(periods=365*period, freq='D')
+    future = model_fit.make_future_dataframe(periods=int(365*period), freq='D')
 
     pred = model_fit.predict(future)
 
+    final_date = pred.ds.iloc[-1].strftime("%m-%d-%Y")
     future_final_price = pred.yhat.iloc[-1]
-    present_price = pred.yhat.iloc[-365*period]
-    slope = (future_final_price - pred.yhat.iloc[-365*period]) / (365*period)
+    present_price = pred.yhat.iloc[-int(365*period)]
+    slope = (future_final_price - pred.yhat.iloc[-int(365*period)]) / (int(365*period))
     future_pctch = 100 * (future_final_price - present_price) / present_price
     past_five_pctch = 100 * (df.y.iloc[-1] - df.y.iloc[0]) / df.y.iloc[0]
 
@@ -64,7 +70,7 @@ def price_fcst(name, period):
     model.plot(pred, ax=ax)
     ax.set_title(f'Forecast Model of {name} Closing Prices')
     ax.plot(pred.ds.iloc[-1], future_final_price, 'bo')
-    ax.text(pred.ds.iloc[-1] + timedelta(days=50), future_final_price, f"${future_final_price:.2f}")
+    ax.text(pred.ds.iloc[-1] + timedelta(days=100), future_final_price, f"${future_final_price:.2f}")
     ax.set_xlabel('Date')
     ax.set_ylabel('Closing Price (USD)')
 
@@ -85,12 +91,14 @@ def price_fcst(name, period):
 
     plt.close(components_fig)
 
-    final_date = pred.ds.iloc[-1].strftime("%m-%d-%Y")
-    print(f"The trend has an average rate of {slope:.4f}")
-    print(f"The predicted price for {name} on {final_date} is ${pred.yhat.iloc[-1]:.2f}")
+    if period_unit == "day":
+        period = period*365
+    elif period_unit == "month":
+        period = period*12
 
-    return (f"{name} closing prices have {past_five_pctch_bool} by {past_five_pctch:.2f}% in the past five years "
-            f"and are predicted to {future_pctch_bool} by {future_pctch:.2f}% in the next {period} year(s).", 
+    return (f"{name} closing price has {past_five_pctch_bool} by {past_five_pctch:.2f}% in the past five years "
+            f"and is predicted to {future_pctch_bool} by {future_pctch:.2f}% in the next {period} {period_unit}(s)."
+            f" The trend has an average rate of {slope:.4f}. Meaning, on average, for every calendar day that passes, the price of {name} is predicted to {future_pctch_bool} by ${slope:.4f}. The predicted price for {name} on {final_date} is ${pred.yhat.iloc[-1]:.2f}.", 
             plot_html1, plot_html, components_html)
 
 
@@ -103,13 +111,22 @@ def forecast():
     ticker = request.form['ticker']
     ticker = ticker.strip()
     ticker = ticker.upper()
-    period = int(request.form['period'])
+    period = request.form['period']
+    period_unit = request.form['period_unit']
+    
+
+    try:
+        period = float(period)
+    except Exception as e:
+        print(e)
+    else:
+        period = int(period)
 
     if period < 0:
         result = f"ERROR: FORECAST LENGTH MUST BE POSITIVE. YOU INPUT {period} AS YOUR FORECAST LENGTH. PLEASE GO BACK A PAGE AND TRY AGAIN."
         return render_template('result.html', result=result)
     else:
-        result,plot_html1, plot_html, components_html = price_fcst(ticker, period)
+        result,plot_html1, plot_html, components_html = price_fcst(ticker, period, period_unit)
         return render_template('result.html', result=result, plot_html1=plot_html1, plot_html=plot_html, components_html=components_html)
 
 

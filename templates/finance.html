@@ -59,9 +59,9 @@
 								This model is notorious for its accuracy and flexibility. However, the volatility of closing prices vary depending on the equity itself, 
 								so the responsible user will invoke their personal judgement and use this merely as a tool to compliment (or contradict) their personal claims.
 								 <br><br>
-								 Note: I limitted the start date to 5 year prior to help mitigate computational cost with the added benefit of predictive accuracy. 
+								 Note: I limitted the start date to 5 year prior in order to help mitigate computational cost with the added benefit of predictive accuracy. 
 								 Although you may ask the model to forecast far into the future, I recommend looking at more immediate forecasts using small time intervals such as 
-								 quarterly (0.25/0.75) or semi-annually (0.5/1/1.5).
+								 days and months.
 								 You will notice, the farther into the future the model predicts, the wider the uncertainty invterval is, indicating less reliable predictions. 
                              </p>
 
@@ -72,9 +72,21 @@
 										<input type="text" name="ticker" id="ticker" value="" placeholder="Ticker Symbol" required/>
 									</div>
 
-								<div class="col-4 col-12-xsmall">
-									<input type="text" name="period" id="period" placeholder="Forecast Period (# of future years to predict)" required/>
-								</div>
+									<div class="col-4 col-12-xsmall">
+										<input type="text" name="period" id="period" placeholder="Forecast Period (# of future years to predict)" required/>
+									</div>
+
+									<div class="col-4">
+										<select name="period_unit" id="period_unit" required>
+											<option value="">- Unit -</option>
+											<option value="day">Day(s)</option>
+											<option value="month">Month(s)</option>
+											<option value="year">Year(s)</option>
+										</select>
+									</div>
+
+
+
 								</div>
 
 								<br><br>
