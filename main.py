@@ -18,8 +18,8 @@ from prophet.diagnostics import performance_metrics
 app = Flask(__name__, static_url_path='/static')
 
 
-def house_fcst(name, period):
-    df = yf.download(tickers = "AAPL",
+def price_fcst(name, period):
+    df = yf.download(tickers = {name},
                  start=datetime.today()-timedelta(days=365*5),
                  end=datetime.today())
     df = df.loc[:, ['Close']]
