@@ -111,7 +111,7 @@ def forecast():
         result = f"ERROR: FORECAST LENGTH MUST BE POSITIVE. YOU INPUT {period} AS YOUR FORECAST LENGTH. PLEASE GO BACK A PAGE AND TRY AGAIN."
         return render_template('result.html', result=result)
     else:
-        result,plot_html1, plot_html, components_html = house_fcst(ticker, period)
+        result,plot_html1, plot_html, components_html = price_fcst(ticker, period)
         return render_template('result.html', result=result, plot_html1=plot_html1, plot_html=plot_html, components_html=components_html)
 
 
