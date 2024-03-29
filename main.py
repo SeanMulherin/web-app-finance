@@ -12,6 +12,7 @@ import io
 
 import yfinance as yf
 ticker_names = pd.read_csv('https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=demo')['symbol']
+ticker_names = np.array(ticker_names)
 
 app = Flask(__name__, static_url_path='/static')
 
