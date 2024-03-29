@@ -11,7 +11,7 @@ import base64
 import io
 
 import yfinance as yf
-
+ticker_names = pd.read_csv('https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=demo')['symbol']
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -96,9 +96,10 @@ def price_fcst(name, period, period_unit):
     elif period_unit == "month":
         period = period*12
 
-    return (f"{name} closing price has {past_five_pctch_bool} by {past_five_pctch:.2f}% in the past five years "
-            f"and is predicted to {future_pctch_bool} by {future_pctch:.2f}% in the next {period} {period_unit}(s)."
-            f" The trend has an average rate of {slope:.4f}. Meaning, on average, for every calendar day that passes, the price of {name} is predicted to {future_pctch_bool} by ${slope:.4f}. The predicted price for {name} on {final_date} is ${pred.yhat.iloc[-1]:.2f}.", 
+    return (f"{name} current price is {df.y.iloc[-1]:.2f}.\n"
+            f"{name} closing price has {past_five_pctch_bool} by {past_five_pctch:.2f}% in the past five years "
+            f"and is predicted to {future_pctch_bool} by {future_pctch:.2f}% in the next {period} {period_unit}(s).\n"
+            f" The trend has an average rate of {slope:.4f}. Meaning, on average, for every calendar day that passes, the price of {name} is predicted to {future_pctch_bool} by ${slope:.4f}. \nThe predicted price for {name} on {final_date} is ${pred.yhat.iloc[-1]:.2f}.", 
             plot_html1, plot_html, components_html)
 
 
@@ -124,6 +125,9 @@ def forecast():
 
     if period < 0:
         result = f"ERROR: FORECAST LENGTH MUST BE POSITIVE. YOU INPUT {period} AS YOUR FORECAST LENGTH. PLEASE GO BACK A PAGE AND TRY AGAIN."
+        return render_template('result.html', result=result)
+    elif ticker not in ticker_names:
+        result = f"ERROR: {ticker} IS EITHER MISSPELLED OR NOT IN DATABASE. PLEASE GO BACK A PAGE AND TRY AGAIN."
         return render_template('result.html', result=result)
     else:
         result,plot_html1, plot_html, components_html = price_fcst(ticker, period, period_unit)
