@@ -1,19 +1,17 @@
 import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 
-from flask import Flask, render_template, request
-import matplotlib.pyplot as plt
-import base64
-import io
 import numpy as np
 import pandas as pd
-import seaborn as sns
+import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
-import datetime as dt
+from flask import Flask, render_template, request
+from prophet import Prophet
+import base64
+import io
+
 import yfinance as yf
 
-from prophet import Prophet
-from prophet.diagnostics import performance_metrics
 
 app = Flask(__name__, static_url_path='/static')
 
