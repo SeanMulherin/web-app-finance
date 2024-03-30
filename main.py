@@ -37,6 +37,8 @@ def price_fcst(name, period, period_unit):
     ax1.set_ylabel('Price (USD)')
     ax1.plot(df.index[-1], df.y[-1], 'bo')
     ax1.text(df.index[-1] + timedelta(100), df.y[-1], f'${df.y[-1]:.2f}')
+    ax1.axhline(df.y[-1], ls='dashed', alpha=0.2, color='black')
+    ax1.axvline(df.index[-1], ls='dashed', alpha=0.2, color='black')
 
     plot_bytes_io1 = io.BytesIO()
     plt.savefig(plot_bytes_io1, format='png')
@@ -71,6 +73,8 @@ def price_fcst(name, period, period_unit):
     model.plot(pred, ax=ax)
     ax.set_title(f'Forecast Model of {name} Closing Prices')
     ax.plot(pred.ds.iloc[-1], future_final_price, 'bo')
+    ax.axhline(future_final_price, ls='dashed', alpha=0.2, color='black')
+    ax.axvline(pred.ds.iloc[-1], ls='dashed', alpha=0.2, color='black')
     ax.text(pred.ds.iloc[-1] + timedelta(days=120), future_final_price, f"${future_final_price:.2f}")
     ax.set_xlabel('Date')
     ax.set_ylabel('Closing Price (USD)')
