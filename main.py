@@ -12,7 +12,6 @@ import io
 
 import yfinance as yf
 ticker_names = pd.read_csv('https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=demo')['symbol']
-ticker_names = np.array(ticker_names)
 ticker_names = np.append(ticker_names, ['ETH-USD', 'BTC-USD'])
 
 app = Flask(__name__, static_url_path='/static')
@@ -38,8 +37,6 @@ def price_fcst(name, period, period_unit):
     ax1.set_ylabel('Price (USD)')
     ax1.plot(df.index[-1], df.y[-1], 'bo')
     ax1.text(df.index[-1] + timedelta(100), df.y[-1], f'${df.y[-1]:.2f}')
-    ax1.axhline(df.y[-1], ls='dashed', alpha=0.2, color='black')
-    ax1.axvline(df.index[-1], ls='dashed', alpha=0.2, color='black')
 
     plot_bytes_io1 = io.BytesIO()
     plt.savefig(plot_bytes_io1, format='png')
@@ -58,8 +55,8 @@ def price_fcst(name, period, period_unit):
 
     final_date = pred.ds.iloc[-1].strftime("%m-%d-%Y")
     future_final_price = pred.yhat.iloc[-1]
-    present_price = pred.yhat.iloc[-int(period)]
-    slope = (future_final_price - pred.yhat.iloc[-int(period)]) / (int(period))
+    present_price = df.y.iloc[-1]
+    slope = (future_final_price - present_price) / (int(period))
     future_pctch = 100 * (future_final_price - present_price) / present_price
     past_five_pctch = 100 * (df.y.iloc[-1] - df.y.iloc[0]) / df.y.iloc[0]
 
@@ -74,8 +71,6 @@ def price_fcst(name, period, period_unit):
     model.plot(pred, ax=ax)
     ax.set_title(f'Forecast Model of {name} Closing Prices')
     ax.plot(pred.ds.iloc[-1], future_final_price, 'bo')
-    ax.axhline(future_final_price, ls='dashed', alpha=0.2, color='black')
-    ax.axvline(pred.ds.iloc[-1], ls='dashed', alpha=0.2, color='black')
     ax.text(pred.ds.iloc[-1] + timedelta(days=120), future_final_price, f"${future_final_price:.2f}")
     ax.set_xlabel('Date')
     ax.set_ylabel('Closing Price (USD)')
@@ -105,7 +100,7 @@ def price_fcst(name, period, period_unit):
     return (f"{name} current price is ${df.y.iloc[-1]:.2f}.\n\n"
             f"It's closing price has {past_five_pctch_bool} by {past_five_pctch:.2f}% in the past five years "
             f"and is predicted to {future_pctch_bool} by {future_pctch:.2f}% in the next {int(period)} {period_unit}(s).\n\n"
-            f" The trend has an average rate of {slope:.4f}. Meaning, on average, for every calendar day that passes, the price of {name} is predicted to {future_pctch_bool} by {slope:.4f} USD. \n\nThe predicted price for {name} on {final_date} is ${pred.yhat.iloc[-1]:.2f}.", 
+            f" The trend has an average rate of {slope:.2f}. Meaning, on average, for every calendar day that passes, the price of {name} is predicted to {future_pctch_bool} by {slope:.2f} USD. \n\nThe predicted price for {name} on {final_date} is ${pred.yhat.iloc[-1]:.2f}.", 
             plot_html1, plot_html, components_html)
 
 
@@ -142,3 +137,11 @@ def forecast():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
+
+
+
+
