@@ -11,6 +11,7 @@ import base64
 import io
 import yfinance as yf
 from fredapi import Fred
+np.float_ = np.float64
 
 ticker_names = pd.read_csv('https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=demo')['symbol']
 ticker_names = np.append(ticker_names, ['ETH-USD', 'BTC-USD'])
