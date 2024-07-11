@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Financial Modeling</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/static/css/main.css" />
+		<noscript><link rel="stylesheet" href="/static/css/noscript.css" /></noscript>
+	</head>
+	
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+							<!-- Nav -->
+								<nav>
+									<ul class="actions">
+										<li><a href="https://seanmulherin.github.io/" class="button large">HOME</a></li>
+									</ul>		
+								</nav>
+						</div>
+					</header>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<h2>Menu</h2>
+					<ul>
+						<li><a href="https://seanmulherin.github.io/">Home</a></li>
+						<li><a href="https://seanmulherin.github.io/blog.html">Blog</a></li>
+						<li><a href="https://seanmulherin.github.io/neuralnetwork.html">Artificial Neural Network</a></li>
+						<li><a href="https://seanmulherin.github.io/carbonization.html">Carbonization Analysis</a></li>
+						<li><a href="https://seanmulherin.github.io/breastcancer.html">Breast Cancer Detection</a></li>
+						<li><a href="https://seanmulherin.github.io/modelingEth.html">Modeling Ethereum</a></li>
+						<li><a href="https://seanmulherin.github.io/lectures.html">Lecture Notes</a></li>
+						<li><a href="https://seanmulherin.github.io/papers.html">Papers</a></li>
+						<li><a href="https://seanmulherin.github.io/resume.html">Resume</a></li>
+                        <li><a href="https://seanmulherin.github.io/thesis.html">Thesis</a></li>
+					</ul>
+				</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Financial Modeling</h1>
+							<center><img src="/static/css/nyc.jpg" width="800" alt="" /></center>
+							<h4>July 9, 2024</h4>
+							 <p>
+                                Hi team,<br>
+                                Here, I provide two tools operating at the confluence of statistics and finance. The first is a forecasting tool that uses the Prophet Model to fit and 
+								predict the daily adjusted closing price of a specified asset. You can look up ticker symbols 
+								<a href="https://ca.finance.yahoo.com/lookup/" target="_blank">here</a>. The data we will be using is provided by Yahoo Finance and the Federal Reserve Bank.
+
+								The Prophet Model is known for its accuracy and flexibility. However, the volatility of closing prices varies depending on the asset itself, so the responsible user will
+								invoke their personal judgment and use this merely as a tool to complement (or contradict) their personal claims.
+								<br><br>
+								As shown below, you can input the ticker symbol, forecasting period, and time unit. Note, the forecasting period will depend on the asset's maturity.
+								I limit the start date to 5 year prior in order to help mitigate computational cost and enhance predictive accuracy. 
+								Although you may ask the model to forecast far into the future, I recommend looking at more immediate forecasts using small time intervals such as 
+								days and months.
+								You will notice, the farther into the future the model predicts, the wider the uncertainty invterval is, indicating less reliable predictions. 
+								<br><br>
+								The second tool is one for portfolio optimzation and valuation. This tool computes the efficiency frontier of a portfolio using 100,000 simulations and notes the
+								optimal portfolio based on the <a href="https://www.investopedia.com/terms/s/sharperatio.asp" target="_blank">Sharpe Ratio</a>. Once the optimal portfolio is identified, 
+								relevant performance metrics are displayed, such as expected return, volatility, and asset weights. 
+								Moreover, the <a href = "https://www.investopedia.com/terms/s/sml.asp" target="_blank">Security Market Line</a> 
+								is fit and beta coefficients are plotted to portray the valuation of each asset as well as the overall
+								portfolio. Note, the market return is based on the S&P 500 Index (^GSPC). 
+                             </p>
+
+							<h3>Single Asset Forecast</h3>
+
+							<form id="nameForm" action="/forecast" method="POST">
+								<div class="row gtr-uniform">
+									<div class="col-4 col-12-xsmall">
+										<input type="text" name="ticker" id="ticker" value="" placeholder="Ticker Symbol (eg. AAPL)" required/>
+									</div>
+
+									<div class="col-4 col-12-xsmall">
+										<input type="text" name="period" id="period" placeholder="Forecast Period (eg. 5)" required/>
+									</div>
+
+									<div class="col-4">
+										<select name="period_unit" id="period_unit" required>
+											<option value="">- Unit -</option>
+											<option value="day">Day(s)</option>
+											<option value="month">Month(s)</option>
+											<option value="year">Year(s)</option>
+										</select>
+									</div>
+
+								</div>
+
+								<br><br>
+								<button type="submit">Submit Forecast</button>
+								<div id="output"></div>
+
+							</form>
+
+
+							<h3>Portfolio Optimization and Valuation</h3>
+
+							<form id="nameForm" action="/portfolio" method="POST">
+								<div class="row gtr-uniform">
+									<div class="col-4 col-12-xsmall">
+										<input type="text" name="tickers" id="tickers" value="" placeholder="Ticker Symbols (eg. AAPL, TSLA, AMZN)" required/>
+									</div>
+								</div>
+
+								<br><br>
+								<button type="submit">Submit Portfolio</button>
+								<div id="output"></div>
+
+							</form>
+
+
+
+						</div>
+					</div>
+
+				<!-- Footer -->
+				<footer id="footer">
+					<div class="inner">
+						<section>
+							<h2>Contact Me</h2>
+							<p><strong>Email: </strong>smulherin519@gmail.com<br><strong>Location: </strong>Los Angeles, CA</p>
+						</section>
+						<section>
+							<h2>Follow</h2>
+							<ul class="icons">
+								<li><a href="https://www.linkedin.com/in/sean-mulherin-93640913a/" target="_blank"><span class="label">Linkedin</span></a></li>
+								<li><a href="https://github.com/SeanMulherin" target="_blank"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+						<ul class="copyright">
+							<li>&copy; Sean Mulherin. All rights reserved</li>
+						</ul>
+					</div>
+				</footer>
+
+			</div>
+
+
+	</body>
+</html>
