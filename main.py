@@ -2,6 +2,7 @@ import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 
 import numpy as np
+np.float_ = np.float64
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
@@ -11,7 +12,6 @@ import base64
 import io
 import yfinance as yf
 from fredapi import Fred
-np.float_ = np.float64
 
 ticker_names = pd.read_csv('https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=demo')['symbol']
 ticker_names = np.append(ticker_names, ['ETH-USD', 'BTC-USD'])
