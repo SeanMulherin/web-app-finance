@@ -111,6 +111,14 @@ def price_fcst(name, period, period_unit):
 
 
 def finance(tickers):
+    n_assets = len(tickers)
+    beta_i = [''] * n_assets
+
+    for i in range(n_assets):
+        ticker_data = yf.Ticker(tickers[i])
+        ticker_info = ticker_data.info
+        beta_i[i] = ticker_info.get('beta', 'N/A')
+
     df = yf.download(tickers = tickers,
                     start=datetime.today()-timedelta(days=365*12),
                     end=datetime.today())
@@ -126,7 +134,6 @@ def finance(tickers):
     annual_return = yearly_data.pct_change()
     tickers = annual_return.columns.tolist()
 
-    n_assets = len(tickers)
     n_sims = 10000
     weights = np.zeros((n_sims, n_assets))
     p_expReturn = np.zeros(n_sims)
@@ -189,17 +196,11 @@ def finance(tickers):
     min_length = min(len(market_return), len(annual_return))
     market_return = market_return[-min_length:]
 
-    beta_i = {}
-    for ticker in tickers:
-        ticker_data = yf.Ticker(ticker)
-        ticker_info = ticker_data.info
-        beta_i[ticker] = ticker_info.get('beta', 'N/A')
-
     returns_i = annual_return.mean()
 
     portfolio_beta = np.sum(beta_i * optimal_weights)
 
-    beta_x = np.arange(beta_i.min() - 1, beta_i.max() + 1, 0.01)
+    beta_x = np.arange(min(beta_i) - 1, max(beta_i) + 1, 0.01)
     market_return_avg = market_return.mean()
     SML = risk_free_rate + beta_x * (market_return_avg - risk_free_rate)
 
@@ -329,4 +330,15 @@ table.scale(5, 2)
 for k in range(len(butt.columns)):
     table[(0, k)].set_facecolor('steelblue')
     table[(0, k)].set_text_props(color='w', weight='bold')
+
+
+
+
+
+
+
+
+
+
+
 
