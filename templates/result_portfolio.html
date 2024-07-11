@@ -1,11 +1,17 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Stock Price Forecast</title>
+		<title>Portfolio Optimization and Valuation</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/static/css/main.css" />
 		<noscript><link rel="stylesheet" href="/static/css/noscript.css" /></noscript>
+		<style>
+			.responsive-img {
+				width: 25%;
+				height: auto;
+			}
+		</style>
 	</head>
 	
 	<body class="is-preload">
@@ -44,27 +50,31 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<h1>Single Asset Forecast</h1>
+							<h1>Portfolio Optimization and Valuation</h1>
 
-							<h2>Forecast Result</h2>
-							<p>{{ result }}</p>
+							<h2>Metrics</h2>
+							<center><p>{{ result }}</p></center>
 
-							<h2>Observed Prices</h2>
+							<center><div class="responsive-img">{{ plot_table | safe }}</div></center>
+
+							<h2>Efficiency Frontier</h2>
+                            <p>
+                                To form the theoretical efficiency frontier, 10,000 portolios are simulated based on randomly generated asset weights. The optimal portfolio (red) is determined using the Sharpe Ratio, which is based on each 
+                                portfolio's expected return, standard deviation, and the risk free rate, (defined as the average annual rate of return of a U.S. treasure security for the past decade.) 
+                            </p>
+
 							<div>{{ plot_html1 | safe }}</div>
 
-							<h2>Forecasted Prices</h2>
+							<h2>Valuation</h2>
+                            <p>
+                                If assets are above the security market line (SML), then they are undervalued based on our calculations and relative to the rest of the market. 
+                                Alternatively, if assets are below the SML, the market overvalues their return. 
+                            </p>
 							<div>{{ plot_html | safe }}</div>
-							 
-
-							<h2>Forecasted Prices Components</h2>
-							<p>Consult the graphs below to identify the seasons by which closing prices fluctuate throughout the year.</p>
-							<div>{{ components_html | safe }}</div>
-
-
-
-				
-			</div>
-		</div>
+							<br><br><br><br>
+							<h4>This is not to be considered financial advice</h4>
+						</div>
+					</div>
 
 
 				<!-- Footer -->
