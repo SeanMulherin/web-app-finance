@@ -4,6 +4,7 @@ flask
 matplotlib
 datetime
 yfinance
+fredapi
 
 
 
