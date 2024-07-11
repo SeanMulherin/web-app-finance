@@ -289,6 +289,7 @@ def forecast():
 def portfolio():
     tickers = request.form['tickers']
     tickers = [i.strip().upper() for i in tickers.split(',')]
+    tickers.sort()
     
     if not set(tickers).issubset(set(ticker_names)):
         result = f"ERROR: {tickers} IS EITHER MISSPELLED OR NOT IN THE DATABASE. PLEASE GO BACK A PAGE AND TRY AGAIN OR CONTACT ME SO I CAN ADD THE TICKER OF INTEREST TO THE DATABASE."
@@ -303,33 +304,6 @@ if __name__ == "__main__":
 
 
 
-
-
-
-
-
-butt = pd.DataFrame({
-    'tickers': [1, 2, 3],
-    'optimal weights': [4, 5, 6]
-})
-
-
-
-
-
-fig, ax5 = plt.subplots(figsize=(1, 1))
-ax5.xaxis.set_visible(False)
-ax5.yaxis.set_visible(False)
-ax5.set_frame_on(False)
-
-table = ax5.table(cellText=butt.values, colLabels=butt.columns, cellLoc='center', loc='center')
-table.auto_set_font_size(False)
-table.set_fontsize(12)
-table.scale(5, 2)
-
-for k in range(len(butt.columns)):
-    table[(0, k)].set_facecolor('steelblue')
-    table[(0, k)].set_text_props(color='w', weight='bold')
 
 
 
