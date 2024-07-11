@@ -112,11 +112,11 @@ def price_fcst(name, period, period_unit):
 
 def finance(tickers):
     df = yf.download(tickers = tickers,
-                    start=datetime.today()-timedelta(days=365*12),
+                    start=datetime.today()-timedelta(days=365*6),
                     end=datetime.today())
 
     market_return = yf.download(tickers = '^GSPC',
-                    start=datetime.today()-timedelta(days=365*12),
+                    start=datetime.today()-timedelta(days=365*6),
                     end=datetime.today())
 
     market_return = market_return['Adj Close'].resample('YE').ffill().dropna().pct_change()
