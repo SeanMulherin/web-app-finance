@@ -2,6 +2,7 @@ import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 
 import numpy as np
+np.float_ = np.float64
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
