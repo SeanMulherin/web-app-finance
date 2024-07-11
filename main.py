@@ -2,7 +2,6 @@ import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 
 import numpy as np
-np.float_ = np.float64
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
@@ -112,11 +111,11 @@ def price_fcst(name, period, period_unit):
 
 def finance(tickers):
     df = yf.download(tickers = tickers,
-                    start=datetime.today()-timedelta(days=365*6),
+                    start=datetime.today()-timedelta(days=365*12),
                     end=datetime.today())
 
     market_return = yf.download(tickers = '^GSPC',
-                    start=datetime.today()-timedelta(days=365*6),
+                    start=datetime.today()-timedelta(days=365*12),
                     end=datetime.today())
 
     market_return = market_return['Adj Close'].resample('YE').ffill().dropna().pct_change()
@@ -189,11 +188,11 @@ def finance(tickers):
     min_length = min(len(market_return), len(annual_return))
     market_return = market_return[-min_length:]
 
-    # Calculate betas for each stock dynamically based on the columns in annual_return
-    beta_i = np.array([
-        np.cov(market_return[1:], annual_return[ticker].values[-min_length+1:])[0, 1]
-        for ticker in tickers
-    ]) / np.var(market_return)
+    beta_i = {}
+    for ticker in tickers:
+        ticker_data = yf.Ticker(ticker)
+        ticker_info = ticker_data.info
+        beta_i[ticker] = ticker_info.get('beta', 'N/A')
 
     returns_i = annual_return.mean()
 
