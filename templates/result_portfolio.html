@@ -73,9 +73,15 @@
 							<div>{{ plot_html | safe }}</div>
 
 							<p>
-								Beta is a measure of risk compared to the overall market (the S&P 500 Index is used as the benchmark.) A beta value above 1 indicates that the asset
-								has historically been more volatile than the market. Alternatively, a beta value below 1 indicates that the asset has historically been less volatile
-								than the market.
+								Beta is a measure of risk compared to the overall market, represented by the S&P 500 Index (^GSPC). A beta value above 1 indicates the asset
+								has historically been more volatile than the market. Alternatively, a beta value below 1 indicates the asset has been less volatile
+								than the market. 
+								<br><br>
+								Note: If the security market line is missing and assets are not plotted, then the required data is not available on Yahoo Finance. This is likely
+								the case if they are fringe assets. For example, many crypto currencies are not represented by the S&P 500 Index and so beta values are not
+								readily available through Yahoo Finance. 
+
+
 							</p>
 
 
