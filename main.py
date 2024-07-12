@@ -198,26 +198,31 @@ def finance(tickers):
 
     returns_i = annual_return.mean()
 
-    try:
+    if "N/A" in beta_i:
+        fig, ax4 = plt.subplots(figsize=(10, 5))
+        ax4.plot([0, 0], [0, 0], label="Security Market Line", color='steelblue', linewidth=2)
+        ax4.set_title("Security Market Line")
+        ax4.set_xlabel("Beta")
+        ax4.set_ylabel("E[R]")
+        ax4.grid(color='grey', linestyle='--', linewidth=0.25)
+
+        print("The p")
+    else:
         portfolio_beta = np.sum(beta_i * optimal_weights)
-    except Exception as e:
-        print(e)
-        print("The ticker(s) don't have a beta term from Yahoo Finance.")
+        beta_x = np.arange(min(beta_i) - 1, max(beta_i) + 1, 0.01)
+        market_return_avg = market_return.mean()
+        SML = risk_free_rate + beta_x * (market_return_avg - risk_free_rate)
 
-    beta_x = np.arange(min(beta_i) - 1, max(beta_i) + 1, 0.01)
-    market_return_avg = market_return.mean()
-    SML = risk_free_rate + beta_x * (market_return_avg - risk_free_rate)
-
-    fig, ax4 = plt.subplots(figsize=(10, 5))
-    ax4.plot(beta_x, SML, label="Security Market Line", color='steelblue', linewidth=2)
-    ax4.scatter(portfolio_beta, optimal_return, color='red', s=50, zorder=5)
-    ax4.scatter(beta_i, returns_i, color='black')
-    for i, label in enumerate(tickers):
-        ax4.text(beta_i[i], returns_i[label]+optimal_return*.1, label, fontsize=9, color='blue')
-    ax4.set_title("Security Market Line")
-    ax4.set_xlabel("Beta")
-    ax4.set_ylabel("E[R]")
-    ax4.grid(color='grey', linestyle='--', linewidth=0.25)
+        fig, ax4 = plt.subplots(figsize=(10, 5))
+        ax4.plot(beta_x, SML, label="Security Market Line", color='steelblue', linewidth=2)
+        ax4.scatter(portfolio_beta, optimal_return, color='red', s=50, zorder=5)
+        ax4.scatter(beta_i, returns_i, color='black')
+        for i, label in enumerate(tickers):
+            ax4.text(beta_i[i], returns_i[label]+optimal_return*.1, label, fontsize=9, color='blue')
+        ax4.set_title("Security Market Line")
+        ax4.set_xlabel("Beta")
+        ax4.set_ylabel("E[R]")
+        ax4.grid(color='grey', linestyle='--', linewidth=0.25)
 
     plot_bytes_io_sml = io.BytesIO()
     plt.savefig(plot_bytes_io_sml, format='png')
@@ -305,16 +310,6 @@ def portfolio():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-
-
-
-
-
-
-
-
 
 
 
