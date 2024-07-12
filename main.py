@@ -134,7 +134,7 @@ def finance(tickers):
     annual_return = yearly_data.pct_change()
     tickers = annual_return.columns.tolist()
 
-    n_sims = 10000
+    n_sims = 1000
     weights = np.zeros((n_sims, n_assets))
     p_expReturn = np.zeros(n_sims)
     p_std = np.zeros(n_sims)
@@ -152,8 +152,6 @@ def finance(tickers):
     optimal_return = p_expReturn[sharpe_ratios.argmax()]
     optimal_std = p_std[sharpe_ratios.argmax()]
     optimal_weights = np.round(weights[sharpe_ratios.argmax(), ], 3)
-
-    optimal_portfolio = pd.DataFrame({'Tickers': tickers, 'Optimal Weights': optimal_weights})
 
     portfolio_data = pd.DataFrame({
         'p_std': p_std,
@@ -233,6 +231,12 @@ def finance(tickers):
 
 
     ######### Portfolio Weights Table #########
+    optimal_weights = weights[sharpe_ratios.argmax(), ] * 100
+    optimal_weights = np.round(optimal_weights, 2)
+
+    optimal_portfolio = pd.DataFrame({'Tickers': tickers, 'Optimal Weights (%)': optimal_weights})
+
+
     fig, ax5 = plt.subplots(figsize=(1, 1))
     ax5.xaxis.set_visible(False)
     ax5.yaxis.set_visible(False)
@@ -241,7 +245,7 @@ def finance(tickers):
     table = ax5.table(cellText=optimal_portfolio.values, colLabels=optimal_portfolio.columns, cellLoc='center', loc='center')
     table.auto_set_font_size(False)
     table.set_fontsize(12)
-    table.scale(5, 2)
+    table.scale(6, 2)
 
     for k in range(len(optimal_portfolio.columns)):
         table[(0, k)].set_facecolor('steelblue')
@@ -303,6 +307,9 @@ def portfolio():
     if not set(tickers).issubset(set(ticker_names)):
         result = f"ERROR: {tickers} IS EITHER MISSPELLED OR NOT IN THE DATABASE. PLEASE GO BACK A PAGE AND TRY AGAIN OR CONTACT ME SO I CAN ADD THE TICKER OF INTEREST TO THE DATABASE."
         return render_template('result_portfolio.html', result=result)
+    elif len(tickers) == 1:
+        result = f"ERROR: {tickers} IS A PORTFOLIO OF ONLY 1 ASSET. PLEASE GO BACK A PAGE AND USE THE 'SINGLE ASSET FORECAST' TOOL OR RETRY WITH MULTIPLE ASSET TICKERS."
+        return render_template('result_portfolio.html', result=result)
     else:
         result, plot_table, plot_efficiency_frontier, plot_sml = finance(tickers)
         return render_template('result_portfolio.html', result=result, plot_table = plot_table, plot_html1=plot_efficiency_frontier, plot_html=plot_sml)
@@ -310,7 +317,6 @@ def portfolio():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
 
 
 
