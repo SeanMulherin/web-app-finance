@@ -198,7 +198,11 @@ def finance(tickers):
 
     returns_i = annual_return.mean()
 
-    portfolio_beta = np.sum(beta_i * optimal_weights)
+    try:
+        portfolio_beta = np.sum(beta_i * optimal_weights)
+    except Exception as e:
+        print(e)
+        print("The ticker(s) don't have a beta term from Yahoo Finance.")
 
     beta_x = np.arange(min(beta_i) - 1, max(beta_i) + 1, 0.01)
     market_return_avg = market_return.mean()
