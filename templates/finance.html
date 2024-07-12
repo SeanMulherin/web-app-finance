@@ -24,23 +24,6 @@
 						</div>
 					</header>
 
-				<!-- Menu -->
-				<nav id="menu">
-					<h2>Menu</h2>
-					<ul>
-						<li><a href="https://seanmulherin.github.io/">Home</a></li>
-						<li><a href="https://seanmulherin.github.io/blog.html">Blog</a></li>
-						<li><a href="https://seanmulherin.github.io/neuralnetwork.html">Artificial Neural Network</a></li>
-						<li><a href="https://seanmulherin.github.io/carbonization.html">Carbonization Analysis</a></li>
-						<li><a href="https://seanmulherin.github.io/breastcancer.html">Breast Cancer Detection</a></li>
-						<li><a href="https://seanmulherin.github.io/modelingEth.html">Modeling Ethereum</a></li>
-						<li><a href="https://seanmulherin.github.io/lectures.html">Lecture Notes</a></li>
-						<li><a href="https://seanmulherin.github.io/papers.html">Papers</a></li>
-						<li><a href="https://seanmulherin.github.io/resume.html">Resume</a></li>
-                        <li><a href="https://seanmulherin.github.io/thesis.html">Thesis</a></li>
-					</ul>
-				</nav>
-
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
@@ -57,12 +40,12 @@
 								invoke their personal judgment and use this merely as a tool to complement (or contradict) their personal claims.
 								<br><br>
 								As shown below, you can input the ticker symbol, forecasting period, and time unit. Note, the forecasting period will depend on the asset's maturity.
-								I limit the start date to 5 year prior in order to help mitigate computational cost and enhance predictive accuracy. 
+								I limit the start date to 5 years prior in order to help mitigate computational cost and enhance predictive accuracy. 
 								Although you may ask the model to forecast far into the future, I recommend looking at more immediate forecasts using small time intervals such as 
 								days and months.
-								You will notice, the farther into the future the model predicts, the wider the uncertainty invterval is, indicating less reliable predictions. 
+								You will notice, the farther into the future the model predicts, the wider the uncertainty interval is, indicating less reliable predictions. 
 								<br><br>
-								The second tool is one for portfolio optimzation and valuation. This tool computes the efficiency frontier of a portfolio using 100,000 simulations and notes the
+								The second tool is one for portfolio optimization and valuation. This tool computes the efficiency frontier of a portfolio using 1,000 simulations and notes the
 								optimal portfolio based on the <a href="https://www.investopedia.com/terms/s/sharperatio.asp" target="_blank">Sharpe Ratio</a>. Once the optimal portfolio is identified, 
 								relevant performance metrics are displayed, such as expected return, volatility, and asset weights. 
 								Moreover, the <a href = "https://www.investopedia.com/terms/s/sml.asp" target="_blank">Security Market Line</a> 
@@ -75,7 +58,7 @@
 							<form id="nameForm" action="/forecast" method="POST">
 								<div class="row gtr-uniform">
 									<div class="col-4 col-12-xsmall">
-										<input type="text" name="ticker" id="ticker" value="" placeholder="Ticker Symbol (eg. AAPL)" required/>
+										<input type="text" name="ticker" id="ticker" value="" placeholder="Insert One Ticker Symbol (eg. AAPL)" required/>
 									</div>
 
 									<div class="col-4 col-12-xsmall">
@@ -104,8 +87,8 @@
 
 							<form id="nameForm" action="/portfolio" method="POST">
 								<div class="row gtr-uniform">
-									<div class="col-4 col-12-xsmall">
-										<input type="text" name="tickers" id="tickers" value="" placeholder="Ticker Symbols (eg. AAPL, TSLA, AMZN)" required/>
+									<div class="col-5 col-12-xsmall">
+										<input type="text" name="tickers" id="tickers" value="" placeholder="Insert Multiple Ticker Symbols (eg. AAPL, TSLA, AMZN)" required/>
 									</div>
 								</div>
 
