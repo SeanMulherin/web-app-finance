@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Portfolio Optimization and Valuation</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/static/css/main.css" />
+		<noscript><link rel="stylesheet" href="/static/css/noscript.css" /></noscript>
+		<style>
+			.responsive-img {
+				width: 25%;
+				height: auto;
+			}
+		</style>
+	</head>
+	
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+							<!-- Nav -->
+								<nav>
+									<ul class="actions">
+										<li><a href="https://finance-ctzs.onrender.com/" class="button large">Back</a></li>
+									</ul>		
+								</nav>
+						</div>
+					</header>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<h2>Menu</h2>
+					<ul>
+						<li><a href="https://seanmulherin.github.io/">Home</a></li>
+						<li><a href="https://seanmulherin.github.io/blog.html">Blog</a></li>
+						<li><a href="https://seanmulherin.github.io/neuralnetwork.html">Artificial Neural Network</a></li>
+						<li><a href="https://seanmulherin.github.io/carbonization.html">Carbonization Analysis</a></li>
+						<li><a href="https://seanmulherin.github.io/breastcancer.html">Breast Cancer Detection</a></li>
+						<li><a href="https://seanmulherin.github.io/modelingEth.html">Modeling Ethereum</a></li>
+						<li><a href="https://seanmulherin.github.io/lectures.html">Lecture Notes</a></li>
+						<li><a href="https://seanmulherin.github.io/papers.html">Papers</a></li>
+						<li><a href="https://seanmulherin.github.io/resume.html">Resume</a></li>
+                        <li><a href="https://seanmulherin.github.io/thesis.html">Thesis</a></li>
+					</ul>
+				</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Portfolio Optimization and Valuation</h1>
+
+							<h2>Metrics</h2>
+							<center><p>{{ result }}</p></center>
+
+							<center><div class="responsive-img">{{ plot_table | safe }}</div></center>
+
+							<h2>Efficiency Frontier</h2>
+                            <p>
+                                To form the theoretical efficiency frontier, 1,000 portfolios are simulated based on randomly generated asset weights. The optimal portfolio (red) is determined using the Sharpe Ratio, which is based on each 
+                                portfolio's expected return, standard deviation, and the risk free rate, defined as the average annual rate of return of a U.S. treasury security for the past decade. 
+                            </p>
+
+							<div>{{ plot_html1 | safe }}</div>
+
+							<h2>Valuation</h2>
+                            <p>
+                                If assets are above the security market line (SML), then they are undervalued based on our calculations and relative to the rest of the market. 
+                                Alternatively, if assets are below the SML, the market overvalues their return. 
+                            </p>
+							<div>{{ plot_html | safe }}</div>
+
+							<p>
+								Beta is a measure of risk compared to the overall market, represented by the S&P 500 Index (^GSPC). A beta value above 1 indicates the asset
+								has historically been more volatile than the market. Alternatively, a beta value below 1 indicates the asset has been less volatile
+								than the market. 
+								<br><br>
+								Note: If the security market line is missing and assets are not plotted, then the required data is not available on Yahoo Finance. This is likely
+								the case if they are fringe assets. For example, many crypto currencies are not represented by the S&P 500 Index and so beta values are not
+								readily available through Yahoo Finance. 
+							</p>
+
+
+							<br><br><br><br>
+							<i>This is not to be considered financial advice. Instead, consult a finance professional.</i>
+						</div>
+					</div>
+
+
+				<!-- Footer -->
+				<footer id="footer">
+					<div class="inner">
+						<section>
+							<h2>Contact Me</h2>
+							<p><strong>Email: </strong>smulherin519@gmail.com<br><strong>Location: </strong>Los Angeles, CA</p>
+						</section>
+						<section>
+							<h2>Follow</h2>
+							<ul class="icons">
+								<li><a href="https://www.linkedin.com/in/sean-mulherin-93640913a/" target="_blank"><span class="label">Linkedin</span></a></li>
+								<li><a href="https://github.com/SeanMulherin" target="_blank"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+						<ul class="copyright">
+							<li>&copy; Sean Mulherin. All rights reserved</li>
+						</ul>
+					</div>
+				</footer>
+
+			</div>
+	</body>
+</html>
