@@ -100,6 +100,7 @@ def price_fcst(name, period, period_unit):
         period = period/365
     elif period_unit == "month":
         period = period/30
+        
 
     return (f"{name} current price is ${df.y.iloc[-1]:.2f}."
             f"It's closing price has {past_five_pctch_bool} by {past_five_pctch:.2f}% in the past five years "
@@ -258,11 +259,12 @@ def finance(tickers):
     plot_table = f'<img src="data:image/png;base64,{plot_base64_table}" alt="plot" />'
     plt.close()
 
-
+    optimal_return *= 100
+    optimal_std *= 100
 
     return (f"Optimal Portfolio Sharpe Ratio: {max_sharpe_ratio:.2f}"
-            f" | Optimal Portfolio Return: {optimal_return:.2f}"
-            f" | Optimal Portfolio Standard Deviation (Risk): {optimal_std:.2f}", 
+            f" | Optimal Portfolio Return: {optimal_return:.1f}"
+            f" | Optimal Portfolio Standard Deviation (Risk): {optimal_std:.1f}", 
             plot_table, plot_efficiency_frontier, plot_sml)
 
 
