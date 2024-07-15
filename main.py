@@ -263,8 +263,8 @@ def finance(tickers):
     optimal_std *= 100
 
     return (f"Optimal Portfolio Sharpe Ratio: {max_sharpe_ratio:.2f}"
-            f" | Optimal Portfolio Return: {optimal_return:.1f}"
-            f" | Optimal Portfolio Standard Deviation (Risk): {optimal_std:.1f}", 
+            f" | Optimal Portfolio Return: {optimal_return:.1f}%"
+            f" | Optimal Portfolio Standard Deviation (Risk): {optimal_std:.1f}%", 
             plot_table, plot_efficiency_frontier, plot_sml)
 
 
