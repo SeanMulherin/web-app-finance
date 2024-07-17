@@ -14,7 +14,7 @@ import yfinance as yf
 from fredapi import Fred
 
 ticker_names = pd.read_csv('https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=demo')['symbol']
-ticker_names = np.append(ticker_names, ['ETH-USD', 'BTC-USD', 'VTSAX', 'VFIAX'])
+ticker_names = np.append(ticker_names, ['ETH-USD', 'BTC-USD', 'VTSAX', 'VFIAX', 'VOO'])
 fred = Fred(api_key = '09ae017da9a8f43be50d4c6e6914c33d')
 risk_free_rate = fred.get_series_latest_release('GS10')[-1] / 100
 
@@ -181,8 +181,8 @@ def finance(tickers):
     ax3.set_xlabel("Risk", fontsize=10)
     ax3.set_ylabel("Return", fontsize=10)
     fig.colorbar(scatter, label='Sharpe Ratio')
-    ax3.set_xlim(0.6*min(p_std), max(p_std))
-    ax3.set_ylim(0.6*min(p_expReturn), max(p_expReturn))
+    #ax3.set_xlim(0.6*min(p_std), max(p_std))
+    #ax3.set_ylim(0.6*min(p_expReturn), max(p_expReturn))
 
     plot_bytes_io_ef = io.BytesIO()
     plt.savefig(plot_bytes_io_ef, format='png')
