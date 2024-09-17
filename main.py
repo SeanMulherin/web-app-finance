@@ -103,7 +103,7 @@ def price_fcst(name, period, period_unit):
         
 
     return (f"{name} current price is ${df.y.iloc[-1]:.2f}."
-            f"It's closing price has {past_five_pctch_bool} by {past_five_pctch:.2f}% in the past five years "
+            f"Its closing price has {past_five_pctch_bool} by {past_five_pctch:.2f}% in the past five years "
             f"and is predicted to {future_pctch_bool} by {future_pctch:.2f}% in the next {int(period)} {period_unit}(s)."
             f" The trend has an average rate of {slope:.2f}. Meaning, on average, for every calendar day that passes, the price of {name} is predicted to {future_pctch_bool} by {slope:.2f} USD. The predicted price for {name} on {final_date} is ${pred.yhat.iloc[-1]:.2f}.", 
             plot_html1, plot_html, components_html)
