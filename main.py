@@ -14,7 +14,7 @@ import yfinance as yf
 from fredapi import Fred
 
 ticker_names = pd.read_csv('https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=demo')['symbol']
-ticker_names = np.append(ticker_names, ['ETH-USD', 'BTC-USD', 'VTSAX', 'VFIAX', 'VOO'])
+ticker_names = np.append(ticker_names, ['ETH-USD', 'BTC-USD', 'VTSAX', 'VFIAX', 'VOO', 'QQQ', 'ETH-BTC'])
 fred = Fred(api_key = '09ae017da9a8f43be50d4c6e6914c33d')
 risk_free_rate = fred.get_series_latest_release('GS10')[-1] / 100
 
