@@ -30,7 +30,7 @@ def price_fcst(name, period, period_unit):
     df = yf.download(tickers = {name},
                  start=datetime.today()-timedelta(days=365*5),
                  end=datetime.today())
-    df = df.loc[:, ['Adj Close']]
+    df = df['Close']
     df.columns = ['y']
     df.index.rename('ds', inplace=True)
 
@@ -128,10 +128,10 @@ def finance(tickers):
                     start=datetime.today()-timedelta(days=365*12),
                     end=datetime.today())
 
-    market_return = market_return['Adj Close'].resample('YE').ffill().dropna().pct_change()
+    market_return = market_return['Close'].resample('YE').ffill().dropna().pct_change()
     market_return_avg = market_return.mean()
-    #daily_return = df['Adj Close'].pct_change().dropna()
-    yearly_data = df['Adj Close'].resample('YE').ffill().dropna()
+    #daily_return = df['Close'].pct_change().dropna()
+    yearly_data = df['Close'].resample('YE').ffill().dropna()
     annual_return = yearly_data.pct_change()
     tickers = annual_return.columns.tolist()
 
