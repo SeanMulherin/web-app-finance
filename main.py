@@ -210,7 +210,7 @@ def finance(tickers):
         portfolio_beta = np.sum(beta_i * optimal_weights)
         beta_x = np.arange(min(beta_i) - 1, max(beta_i) + 1, 0.01)
         market_return_avg = market_return.mean()
-        SML = risk_free_rate + beta_x * (market_return_avg - risk_free_rate)
+        SML = risk_free_rate + beta_x * (market_return_avg - risk_free_rate)[0]
 
         fig, ax4 = plt.subplots(figsize=(10, 5))
         ax4.plot(beta_x, SML, label="Security Market Line", color='steelblue', linewidth=2)
