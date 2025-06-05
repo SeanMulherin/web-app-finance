@@ -30,8 +30,8 @@ def price_fcst(name, period, period_unit):
     df = yf.download(tickers = {name},
                  start=datetime.today()-timedelta(days=365*5),
                  end=datetime.today())
-    df = df['Close']
-    df.columns = ['y']
+    df = df["Close"][name]
+    df = df.to_frame(name="y")  
     df.index.rename('ds', inplace=True)
 
     fig, ax1 = plt.subplots(figsize=(10, 5))
